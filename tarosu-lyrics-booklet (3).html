@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>まるくて、やさしいリズム。白くまたろすと歩く、ぼくらのうた。</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500;700&family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --snow: #f8fbff;
+    --ice-blue: #d6eaf8;
+    --sky: #a8d8ea;
+    --frost: #e8f4f8;
+    --warm-gray: #8a9aa5;
+    --text: #4a5568;
+    --text-light: #7b8fa0;
+    --accent: #89c4e1;
+    --pale-yellow: #fff9e6;
+    --pale-lavender: #ede7f6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page { size: A5; margin: 15mm; }
+
+  @media print {
+    .page { page-break-after: always; box-shadow: none; margin: 0; }
+    .page:last-child { page-break-after: avoid; }
+    body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  body {
+    font-family: 'Zen Maru Gothic', 'Klee One', sans-serif;
+    background: #edf2f7;
+    color: var(--text);
+    line-height: 2;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .booklet { max-width: 600px; margin: 0 auto; }
+
+  .page {
+    background: var(--snow);
+    min-height: 800px;
+    padding: 60px 48px;
+    margin: 16px auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+
+  /* ===== TAROSU SVG ILLUSTRATION ===== */
+  .tarosu-svg { display: block; margin: 0 auto; }
+
+  /* ===== COVER ===== */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(170deg, #ffffff 0%, var(--ice-blue) 40%, var(--sky) 100%);
+    min-height: 860px;
+    position: relative;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .cover-title {
+    font-family: 'Klee One', serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 2;
+    color: var(--text);
+    letter-spacing: 0.08em;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 8px;
+  }
+
+  .cover-dots {
+    margin-top: 48px;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+  }
+
+  /* ===== INTRO / OUTRO ===== */
+  .intro-page, .outro-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 800px;
+  }
+
+  .intro-page { background: linear-gradient(180deg, var(--snow) 0%, var(--frost) 100%); }
+  .outro-page { background: linear-gradient(180deg, var(--frost) 0%, var(--ice-blue) 60%, var(--sky) 100%); }
+
+  .section-label {
+    font-family: 'Klee One', serif;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.3em;
+    margin-bottom: 28px;
+  }
+
+  .intro-text, .outro-text {
+    font-family: 'Klee One', serif;
+    font-size: 15px;
+    line-height: 2.4;
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== SONG PAGES ===== */
+  .song-page { padding: 48px 40px; position: relative; }
+
+  .song-number {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-size: 11px; font-weight: 300;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    margin-bottom: 8px;
+  }
+
+  .song-title {
+    font-family: 'Klee One', serif;
+    font-size: 20px; font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.06em;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--ice-blue);
+  }
+
+  .song-comment {
+    margin-bottom: 36px;
+    padding: 20px 24px;
+    background: var(--frost);
+    border-radius: 12px;
+    border-left: 3px solid var(--ice-blue);
+  }
+
+  .song-comment p {
+    font-family: 'Klee One', serif;
+    font-size: 12.5px;
+    line-height: 2.2;
+    color: var(--text-light);
+    letter-spacing: 0.03em;
+  }
+
+  .song-section { margin-bottom: 24px; }
+
+  .song-section-label {
+    font-size: 10px; font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  .lyrics {
+    font-family: 'Klee One', serif;
+    font-size: 13.5px;
+    line-height: 2.2;
+    color: var(--text);
+    letter-spacing: 0.03em;
+    white-space: pre-line;
+  }
+
+  .song-page .page-accent {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.06;
+  }
+
+  .accent-1 { width: 200px; height: 200px; background: var(--sky); top: -60px; right: -80px; }
+  .accent-2 { width: 120px; height: 120px; background: var(--accent); bottom: -40px; left: -50px; }
+
+  .page-footer {
+    position: absolute;
+    bottom: 24px; left: 0; right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: var(--warm-gray);
+    opacity: 0.5;
+    letter-spacing: 0.2em;
+  }
+
+  .divider {
+    width: 40px; height: 1px;
+    background: var(--ice-blue);
+    margin: 32px auto;
+  }
+
+  /* ===== TOC ===== */
+  .toc-page {
+    padding: 60px 48px;
+    min-height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: var(--snow);
+  }
+
+  .toc-title {
+    font-family: 'Klee One', serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    margin-bottom: 40px;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--ice-blue);
+  }
+
+  .toc-num {
+    font-size: 12px;
+    color: var(--accent);
+    width: 28px;
+    flex-shrink: 0;
+    font-weight: 300;
+  }
+
+  .toc-name {
+    font-family: 'Klee One', serif;
+    font-size: 14px;
+    color: var(--text);
+    letter-spacing: 0.04em;
+  }
+
+  .tint-blue { background: linear-gradient(180deg, var(--snow) 0%, #e8f4fc 100%); }
+  .tint-warm { background: linear-gradient(180deg, var(--snow) 0%, var(--pale-yellow) 100%); }
+  .tint-pink { background: linear-gradient(180deg, var(--snow) 0%, #fdf0f3 100%); }
+  .tint-green { background: linear-gradient(180deg, var(--snow) 0%, #eef7ef 100%); }
+  .tint-lavender { background: linear-gradient(180deg, var(--snow) 0%, #f3effa 100%); }
+
+  @media (max-width: 640px) {
+    .page { padding: 40px 28px; min-height: auto; }
+    .song-page { padding: 36px 24px; }
+    .cover { min-height: 600px; padding: 40px 28px; }
+    .cover-title { font-size: 17px; }
+    .lyrics { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="booklet">
+
+  <!-- ========== COVER ========== -->
+  <div class="page cover">
+    <!-- Abstract white bear silhouette -->
+    <svg width="160" height="180" viewBox="0 0 160 180" style="margin-bottom: 36px; position: relative; z-index: 1;">
+      <!-- Soft glow behind -->
+      <ellipse cx="80" cy="100" rx="70" ry="80" fill="white" opacity="0.25"/>
+      <!-- Body: large soft circle -->
+      <ellipse cx="80" cy="112" rx="46" ry="52" fill="white" opacity="0.85"/>
+      <!-- Head: overlapping circle -->
+      <ellipse cx="80" cy="62" rx="40" ry="38" fill="white" opacity="0.9"/>
+      <!-- Left ear -->
+      <circle cx="50" cy="32" r="16" fill="white" opacity="0.8"/>
+      <circle cx="50" cy="33" r="8" fill="#c8e0ee" opacity="0.4"/>
+      <!-- Right ear -->
+      <circle cx="110" cy="32" r="16" fill="white" opacity="0.8"/>
+      <circle cx="110" cy="33" r="8" fill="#c8e0ee" opacity="0.4"/>
+      <!-- Eyes: small gentle dots -->
+      <circle cx="68" cy="58" r="3" fill="#8a9aa5" opacity="0.7"/>
+      <circle cx="92" cy="58" r="3" fill="#8a9aa5" opacity="0.7"/>
+      <!-- Nose -->
+      <ellipse cx="80" cy="67" rx="3.5" ry="2.5" fill="#a0b0ba" opacity="0.6"/>
+      <!-- Subtle smile -->
+      <path d="M73,72 Q80,78 87,72" stroke="#a0b0ba" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+    </svg>
+
+    <div class="cover-title">
+      まるくて、やさしいリズム。<br>
+      白くまたろすと歩く、ぼくらのうた。
+    </div>
+    <div class="cover-dots">
+      <div class="cover-dot"></div>
+      <div class="cover-dot"></div>
+      <div class="cover-dot"></div>
+    </div>
+  </div>
+
+  <!-- ========== TOC ========== -->
+  <div class="page toc-page">
+    <div class="toc-title">もくじ</div>
+    <div class="toc-item"><span class="toc-num">01</span><span class="toc-name">ぼくはくま</span></div>
+    <div class="toc-item"><span class="toc-num">02</span><span class="toc-name">白くまのたろす（原曲）</span></div>
+    <div class="toc-item"><span class="toc-num">03</span><span class="toc-name">たろぴのテーマ</span></div>
+    <div class="toc-item"><span class="toc-num">04</span><span class="toc-name">ぷー（たろぷのテーマ）</span></div>
+    <div class="toc-item"><span class="toc-num">05</span><span class="toc-name">たろすのはじまり</span></div>
+    <div class="toc-item"><span class="toc-num">06</span><span class="toc-name">白くまのたろす ～100点満点ver～</span></div>
+    <div class="toc-item"><span class="toc-num">07</span><span class="toc-name">白くまのたろす フルバージョン</span></div>
+    <div class="toc-item"><span class="toc-num">08</span><span class="toc-name">白くまのたろす ～4年3組ver～</span></div>
+    <div class="page-footer">— うた —</div>
+  </div>
+
+  <!-- ========== HAJIMENI ========== -->
+  <div class="page intro-page">
+    <div class="section-label">は じ め に</div>
+    <div class="intro-text">
+      がんばらなきゃ、と思う日がある。<br>
+      うまくやらなきゃ、と自分を急かす日がある。<br><br>
+      でも、たろすはいつも言うのです。<br>
+      「のんびりでいいよ」と。<br><br>
+      この冊子には、白くまのたろすと<br>
+      その仲間たちの歌がつまっています。<br>
+      声に出しても、心の中で読んでも、<br>
+      どちらでも大丈夫。<br><br>
+      そのままの自分で、ページをめくってください。
+    </div>
+    <div class="divider"></div>
+    <div class="page-footer">01</div>
+  </div>
+
+  <!-- ========== SONG 01: ぼくはくま ========== -->
+  <div class="page song-page tint-blue">
+    <div class="page-accent accent-1"></div>
+    <div class="song-number">— 01 —</div>
+    <div class="song-title">ぼくはくま</div>
+
+    <div class="song-comment">
+      <p>
+        やさしくて、まるい時間が流れていく一曲。<br>
+        うまくいかない日も、となりに誰かの気配があるだけで少し軽くなる。<br>
+        「くま くま くま」と口ずさみたくなるリズムの中で、<br>
+        ひとりじゃないことのあたたかさが、そっと心に残ります。
+      </p>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Intro</div>
+      <div class="lyrics">ぼくは くま くま くま
+みんなで くま くま くま
+まるくて やさしいリズム
+今日も はじまるよ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 1</div>
+      <div class="lyrics">ふわふわ歩けば 風が笑う
+ぽてっと転んで また笑う
+うまくいかない日だって
+それも物語</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">強くなくても 輪になれる
+速くなくても 歌えるよ
+心がそろえば それだけで
+世界はあたたかい</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">ぼくは くま くま くま
+みんなで くま くま くま
+ひとつじゃない鼓動が
+重なって ひびく
+ぼくは くま くま くま
+みんなで くま くま くま
+ちがっているからこそ
+まるくなれるんだ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 2</div>
+      <div class="lyrics">泣きたい夜も あるけれど
+となりに気配があるだけで
+ひとり分だった勇気が
+ふたつに増える</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Bridge</div>
+      <div class="lyrics">ぼくがくまなら きみもくま
+きみがくまなら ぼくもくま
+名前を呼べば ほらすぐに
+輪っかができるよ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Last Chorus</div>
+      <div class="lyrics">ぼくは くま くま くま
+みんなで くま くま くま
+のんびりだけど たしかに
+未来へ つづく
+ぼくは くま くま くま
+みんなで くま くま くま
+ひとりじゃないってことが
+いちばんの強さ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="lyrics">ぼくは くま</div>
+    </div>
+
+    <div class="page-footer">02</div>
+  </div>
+
+  <!-- ========== SONG 02 ========== -->
+  <div class="page song-page tint-warm">
+    <div class="page-accent accent-1"></div>
+    <div class="song-number">— 02 —</div>
+    <div class="song-title">白くまのたろす（原曲）</div>
+
+    <div class="song-comment">
+      <p>
+        ふわっとしたやさしさに包まれて、気づけば肩の力が抜けている。<br>
+        たろすのリズムは、急がなくても大丈夫って、そっと教えてくれる。<br>
+        何気ない毎日が少しだけあたたかく見える、<br>
+        そんな「ハッピー」の種が、静かに残る一曲。
+      </p>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">サビ！たろす　たろす　ゆめを抱きしめ
+ぼくらの心にともる 光
+のんびりだけど　未来へ向かう
+白くまリズムで　今日もハッピー！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 1</div>
+      <div class="lyrics">まんまるシルエット　ふわふわボディ
+ごはんの気配に　きらきらの目
+ぽっちゃり揺れて　とことこ歩く
+マイペースで行こうよ　くまくまステップ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">前サビ！ちょっとくらいあわてても
+たろすがいれば平気だよ
+ほら深呼吸してみて
+やさしさが広がる</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">サビ！たろす　たろす　笑顔を運ぶ
+ぼくらの毎日を照らすメロディ
+ゆったりだけど　心が弾む
+白くまたろすで　今日もハッピー！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 2</div>
+      <div class="lyrics">「くま」とつぶやき　みんなほっこり
+雲みたいに包む　あたたかい空気
+そばにいるだけで ゆるんでいくよ
+悩みもどこかへ　ぽんっと飛んでく</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">いそがしい時こそほら
+たろすが見せるあのもふもふ
+自然と笑顔になるよ
+魔法みたいだね</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす　たろす　ゆめを抱きしめ
+ぼくらの心にともる 光
+のんびりだけど　未来へ向かう
+白くまたろすで　ずっとハッピー！</div>
+    </div>
+
+    <div class="page-footer">03</div>
+  </div>
+
+  <!-- ========== SONG 03 ========== -->
+  <div class="page song-page tint-pink">
+    <div class="page-accent accent-1"></div>
+    <div class="page-accent accent-2"></div>
+    <div class="song-number">— 03 —</div>
+    <div class="song-title">たろぴのテーマ</div>
+
+    <div class="song-comment">
+      <p>
+        にぎやかな言葉の波にのまれているうちに、<br>
+        ふと、自分の中にも「話したい」が生まれてくる。<br>
+        止まらないおしゃべりは、ただのにぎやかさじゃなくて、<br>
+        世界を広げていくエネルギー。<br>
+        気づけば、少しだけ心の距離が近くなっている一曲。
+      </p>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Intro</div>
+      <div class="lyrics">ねえねえねえねえ聞いて聞いて！
+あのねさっきねそれでねつまりね！
+あ、でもちょっと待ってやっぱ先にこっちの話！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 1</div>
+      <div class="lyrics">朝起きて　思ったことを
+全部ぜんぶ　話したいの
+空の色も　パンのかたちも
+気づいたことは　シェアしたい！
+
+廊下歩いて　三歩で止まる
+「あ、今の気づいた？」って振り向く
+だれもいなくても　大丈夫！
+ぼくがいるから　会話スタート！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">止まらないのは　クセじゃないよ
+世界が広がる　入り口なんだ！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろぴ　たろぴ　ことばのシャワー！
+ひらめきポンポン　止まらない！
+たろぴ　たろぴ　話してたいの！
+きみの心にも　届けたい！
+
+ねえねえねえねえ　まだあるよ！
+これからもっと　話すけどいい？</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 2</div>
+      <div class="lyrics">静かな時間？　それもいいけど
+そのあとすぐに　話したい！
+気づいたことを　つなげていくと
+世界はもっと　おもしろい！
+
+「なんで？」からの　「もしかして！」
+「やっぱそうかも！」で止まらない
+考えるより　口が先！
+でもそれがね　ぼくなんだ！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Bridge</div>
+      <div class="lyrics">言葉はね　つながると
+心まで　近くなる
+しゃべりすぎ？　それでもいい！
+伝えたいが　あふれてる！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろぴ　たろぴ　ことばのリズム！
+くるくる回って　ひろがるよ！
+たろぴ　たろぴ　止めないでね！
+まだまだ話す　準備OK！
+
+ねえねえ最後にもうひとつ！
+やっぱやめた！またあとで話すね！！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Outro</div>
+      <div class="lyrics">…って言って結局また話すんだけどね！！</div>
+    </div>
+
+    <div class="page-footer">04</div>
+  </div>
+
+  <!-- ========== SONG 04 ========== -->
+  <div class="page song-page tint-lavender">
+    <div class="page-accent accent-1"></div>
+    <div class="song-number">— 04 —</div>
+    <div class="song-title">ぷー（たろぷのテーマ）</div>
+
+    <div class="song-comment">
+      <p>
+        つかめそうで、つかめないまま。<br>
+        でもその「わからなさ」が、なぜか心地いい。<br>
+        意味になりきらないままの言葉や景色が、<br>
+        ふとした瞬間に、少しだけ世界をやわらかくする。<br>
+        理由はないけど、なんだかいい。<br>
+        そんな余白が、静かに残る一曲。
+      </p>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Intro</div>
+      <div class="lyrics">ぷー。</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 1</div>
+      <div class="lyrics">雨が上からじゃなくて
+横から降った午後
+たろぷだけが普通に
+まっすぐ歩いてた
+
+雲がパンみたいにちぎれて
+空にバターがぬられてる
+だれも気づかないのに
+たろぷだけは　うなずいた
+
+ぷー。</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">意味はあとから
+ついてくるらしい
+たぶん来ない日も
+あるらしい</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろぷ　たろぷ
+ぷーは四角い
+ころがらないけど　転がってる
+たろぷ　たろぷ
+目が合うたび
+なぜか笑ってしまうんだ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 2</div>
+      <div class="lyrics">影が本体を連れて
+先に帰る夕方
+たろぷは影を気にせず
+自分で立ってる
+
+おなかが鳴ると
+星がひとつ増える
+科学じゃないけど
+わりと本気で信じてる
+
+ぷー。</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Bridge</div>
+      <div class="lyrics">さみしい？
+ちがう。
+
+うれしい？
+ちがう。
+
+じゃあ何？
+ぷー。</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Last Chorus</div>
+      <div class="lyrics">たろぷ　たろぷ
+理由はないけど
+近くにいると　ちょうどいい
+たろぷ　たろぷ
+世界のすみで
+ふわっと重たい存在感</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Outro</div>
+      <div class="lyrics">ぷー。
+今日も地球は
+ちゃんと浮いてる。</div>
+    </div>
+
+    <div class="page-footer">05</div>
+  </div>
+
+  <!-- ========== SONG 05: たろすのはじまり（修正版） ========== -->
+  <div class="page song-page tint-green">
+    <div class="page-accent accent-1"></div>
+    <div class="song-number">— 05 —</div>
+    <div class="song-title">たろすのはじまり</div>
+
+    <div class="song-comment">
+      <p>
+        静かに座り込んだところから、物語が始まっていく。<br>
+        前に進むためじゃなくて、立ち止まることを許すための存在。<br>
+        言葉にしなくても伝わるやさしさが、<br>
+        少しずつ呼吸を取り戻させてくれる。<br>
+        動けない時間さえ、ちゃんと「はじまり」なんだと、<br>
+        あとから気づくような余韻。
+      </p>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Intro</div>
+      <div class="lyrics">たろす たろす いまを抱きしめ
+ぼくらの心を 照らすひかり
+のんびりだから 見える景色
+白くまたろすと あてもなく
+
+物語のはじまりは
+何かが始まった日じゃない
+もう無理かもしれないって
+誰かが　座り込んだ日</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 1</div>
+      <div class="lyrics">早く行こうの声ばかり
+正しさだけが　先を行く
+泣く理由は　説明できず
+立ち止まるのは　弱さとされた
+
+できる人だけ　光を浴び
+できない影は　森に沈む
+ほんとはただ
+息を吸いたかっただけ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">その場所に
+ぽてっと座る　白い影
+何も言わず
+「今はここでいいよ」って</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす　たろす
+生まれた理由は
+前へ進ませるためじゃない
+たろす　たろす
+泣いたままで
+朝を迎えてもいいと　伝えるため
+強くなくていい
+はやくなくていい
+白くまリズムで　生きていく</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 2</div>
+      <div class="lyrics">教えない　答えも出さない
+ただ隣で　同じ速さ
+ごはんの匂いに　目を細め
+小さな今日を　大事にする
+
+弱さを　しまわなくていい
+できない日を　消さなくていい
+抱えたままで
+歩く背中を　見てる</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">やめずにいることの
+難しさを
+誰よりも
+たろすは　知ってる</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす　たろす
+そのままでいいって
+言葉じゃなく　空気で言う
+たろす　たろす
+遅れる人の
+世界を　置き去りにしない
+比べなくていい
+飾らなくていい
+まるい背中が　守ってる</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Bridge</div>
+      <div class="lyrics">たろすがいない世界では
+人は　がんばるほど　ひとり
+だからここに
+止まっていい場所が　必要だった</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Last Chorus</div>
+      <div class="lyrics">たろす　たろす
+名前を呼べば
+少しだけ　呼吸が戻る
+たろす　たろす
+今日を越えられなくても
+今日にいていいと　教えてくれる
+ヒーローじゃない
+答えもない
+それでもそばに　いる存在</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Outro</div>
+      <div class="lyrics">たろすの物語は
+今も　誰かの隣で続く
+はじまりは
+立ち止まった　その瞬間から</div>
+    </div>
+
+    <div class="page-footer">06</div>
+  </div>
+
+  <!-- ========== SONG 06 ========== -->
+  <div class="page song-page tint-warm">
+    <div class="page-accent accent-1"></div>
+    <div class="page-accent accent-2"></div>
+    <div class="song-number">— 06 —</div>
+    <div class="song-title">白くまのたろす ～100点満点ver～</div>
+
+    <div class="song-comment">
+      <p>
+        がんばれない日も、そのままでいいと思わせてくれる。<br>
+        やさしさが、そっと寄り添ってくるような一曲。<br>
+        できたことも、できなかったことも、全部ひっくるめて、<br>
+        「ここまで来たね」と言ってもらえるあたたかさが残る。<br>
+        静かに、自分をゆるせるようになる余韻。
+      </p>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす　たろす　ゆめを抱きしめ
+ぼくらの心にともる ひかり
+のんびりだけど 未来へ向かう
+白くまリズムで　今日もハッピー！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 1</div>
+      <div class="lyrics">まんまるシルエット　ふわふわボディ
+小さな幸せ　見逃さない目
+ぽっちゃり揺れて　とことこ歩く
+マイペースの準備 くまくまステップ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">立ち止まる日があっても
+理由もなく　つらい日があっても
+ほら深呼吸してみて
+やわらかい影 君のそばに</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす　たろす　ゆめを抱きしめ
+ぼくらのいつもを 照らしてくれる
+のんびりだけど　消えない一歩
+白くまリズムで　今日も笑顔</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 2</div>
+      <div class="lyrics">「たろす」とつぶやく　それだけで
+張りつめていた胸が　もふもふに
+強くなくても　ちゃんと笑えなくても
+ここにいていいと　思えてくる</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">かなしい時こそほら
+無理に元気じゃなくていい
+泣いても　黙ってても
+そばには　たろすがいる</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす　たろす　笑顔を運ぶ
+ぼくらの弱さを照らすメロディ
+ゆったりだけど　そのままで
+白くまたろすと　歩いていこう</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Bridge</div>
+      <div class="lyrics">たろす　たろす
+何もできなかった夜も
+自分を嫌いになった朝も
+それでも　ここまで来た
+だからもう　100点満点くま</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Final Chorus</div>
+      <div class="lyrics">たろす　たろす　そのままでいい
+うまくできなくても 君らしく
+比べなくても 合わせなくても
+この歩幅が ぼくの真ん中
+たろす　たろす　夜を越えて
+消えかけた灯りは 必ずまた灯る
+のんびりでも　遠回りでも
+絶対その道は たろすが見つける
+たろす　たろす　ゆめを抱きしめ
+ぼくらの心にともる　ひかり
+ゆったりだけど　未来へ進む
+白くまたろすと　今日も行く</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Outro</div>
+      <div class="lyrics">たろす　たろす…
+白くまたろすで 今日も生きよう</div>
+    </div>
+
+    <div class="page-footer">07</div>
+  </div>
+
+  <!-- ========== SONG 07 ========== -->
+  <div class="page song-page tint-blue">
+    <div class="page-accent accent-1"></div>
+    <div class="song-number">— 07 —</div>
+    <div class="song-title">白くまのたろす フルバージョン</div>
+
+    <div class="song-comment">
+      <p>
+        にぎやかなハッピーの奥に、そっと隠れていた気持ちに気づく。<br>
+        笑っているだけじゃない毎日も、そのままでいいと思えてくる。<br>
+        がんばってきたことも、迷った時間も、<br>
+        全部連れて歩いていいんだと、静かに背中を押してくれる。<br>
+        やさしさに包まれながら、少しだけ前を向ける余韻。
+      </p>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす たろす ゆめを抱きしめ
+ぼくらの心にともる 光
+のんびりだけど 未来へ向かう
+白くまリズムで 今日もハッピー！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 1</div>
+      <div class="lyrics">ぴとっと
+まんまるシルエット ふわふわボディ
+ごはんの気配に きらきらの目
+ぽっちゃり揺れて とことこ歩く
+マイペースで行こうよ くまくまステップ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">ちょっとくらいあわてても
+たろすがいれば平気だよ
+ほら深呼吸してみて
+やさしさが広がる</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす たろす 笑顔を運ぶ
+ぼくらの毎日を照らすメロディ
+ゆったりだけど 心が弾む
+白くまたろすで 今日もハッピー！</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 2</div>
+      <div class="lyrics">強くなろうとして 背伸びした夜
+正しさ選んで 心を置いて
+大人になるほど 涙をしまって
+笑顔の仮面が 上手くなるだけ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">「がんばれ」の声で 苦しむ日だってある
+誰にも言えない想いが 胸の奥で震えてる</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす たろす あすを抱きしめ
+ぼくらの弱さに灯る ひかり
+のんびりだから 見えたけしき
+白くまたろすと あてもなく</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 3</div>
+      <div class="lyrics">比べるたびに 遅れそうで
+立ち止まること 怖くなった
+でも遠回りにしか
+咲かない花があると
+たろすはそっと 教えてくれた</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">間違えた分だけ
+守れたものがあって
+壊れそうな優しさも
+ちゃんと強さだった</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす たろす つらさだって
+生きてきた日の しるしだよ
+急がなくていい 迷ってもいい
+白くまリズムは 消えやしない</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Bridge</div>
+      <div class="lyrics">役割を脱いだら 空になる気がして
+そんな想像が 夜を重くする
+それでも朝は いつも通り来て
+弱さを隠すほど 心は沈む
+抱えたままでいい
+降ろせる場所が ここに ある</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Final Chorus</div>
+      <div class="lyrics">たろす たろす そのままでいい
+完璧じゃなくて 強くなくていい
+比べなくていい 合わせなくていい
+この歩幅が ぼくの真ん中
+
+たろす たろす 今日を抱きしめ
+傷ついた心も 連れていこう
+のんびりでいい それがぼくら
+
+たろす たろす ゆめを抱きしめ
+ぼくらの心に ともるひかり
+弱さを隠さず 進める道を
+白くまたろすと 一緒に</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Outro</div>
+      <div class="lyrics">たろす たろす…
+白くまたろすで 今日も生きよう</div>
+    </div>
+
+    <div class="page-footer">08</div>
+  </div>
+
+  <!-- ========== SONG 08 ========== -->
+  <div class="page song-page tint-green">
+    <div class="page-accent accent-1"></div>
+    <div class="page-accent accent-2"></div>
+    <div class="song-number">— 08 —</div>
+    <div class="song-title">白くまのたろす ～4年3組ver～</div>
+
+    <div class="song-comment">
+      <p>
+        あの日の空気や声が、そのまま戻ってくるような一曲。<br>
+        にぎやかな時間も、うまくいかなかった瞬間も、全部やさしく包まれている。<br>
+        何気ない毎日が、あとからこんなにも光って見えることに、<br>
+        少しだけ胸があたたかくなる。<br>
+        このリズムはきっと、これからもどこかで続いていく。
+      </p>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす たろす ゆめを抱きしめ
+ぼくらの心に ともるひかり
+のんびりだけど 未来へ向かう
+白くまたろすで 今日もハッピー</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 1</div>
+      <div class="lyrics">ぴとっと まんまるシルエット
+ふわふわボディ
+ごはんの気配に きらきらの目
+ぽっちゃり揺れて とことこ歩く
+マイペースで行こうよ
+くまくまステップ</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">いこうよ ちょっとくらい
+あわてても
+たろすがいれば 平気だよ
+ほら深呼吸してみて
+やさしさが広がる</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす たろす 思い出たちは
+ぼくらの心を てらすメロディ
+のんびりだけど 未来へ向かう
+白くまリズムで 今日もハッピー</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 2</div>
+      <div class="lyrics">給食 ピーマン 山もり
+先生ちょっと
+苦手そうでも 笑ってたよね
+すこしずつでも 食べていたね
+にこにこ見てたよ
+みんなの席で</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">川越の町並み
+おかしの香り
+わしすいて作った紙
+そっと光る思い出
+やさしい景色が</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす たろす 過ごした日々は
+ぼくらの毎日に ともるひかり
+のんびりだけど 君らしく
+白くまたろすと 今日もあるく</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Verse 3</div>
+      <div class="lyrics">運動会 空ゆれるフラッグ
+かぜのリズムに
+そろった動き
+長縄とんで 数えていたね
+五十から百へと
+声がひびく</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Pre-Chorus</div>
+      <div class="lyrics">音楽集会で 指揮の先生
+うまくいかず
+悩む日も あったけれど
+みんなの歌声が
+そっと支えた</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Chorus</div>
+      <div class="lyrics">たろす たろす 思い出たちは
+ぼくらの心を てらすひかり
+のんびりだから 見えたけしき
+白くまリズムは 消えやしない
+たろす たろす 今日を抱きしめ
+笑った日々も 連れていこう
+4年3組の このリズムで
+未来へつづく 足あと</div>
+    </div>
+
+    <div class="song-section">
+      <div class="song-section-label">Outro</div>
+      <div class="lyrics">今日の思い出 抱いたまま
+
+ぼくらは歩き出す
+
+白くまたろすと歩んだ日々は</div>
+    </div>
+
+    <div class="page-footer">09</div>
+  </div>
+
+  <!-- ========== OWARI NI ========== -->
+  <div class="page outro-page">
+    <div class="section-label">お わ り に</div>
+    <div class="outro-text">
+      最後まで読んでくれて、ありがとう。<br><br>
+      たろすの歌は、だれかを急かしたりしません。<br>
+      「もっとがんばれ」とも言いません。<br><br>
+      ただ、となりに座って、<br>
+      同じ空を見ているだけ。<br><br>
+      もしいつか、ちょっとつかれたなと思ったら、<br>
+      このページを開いてみてください。<br>
+      白くまリズムは、いつでもここにあります。<br><br>
+      のんびりで、いいんだよ。
+    </div>
+    <div class="divider"></div>
+
+    <!-- Abstract white bear (small, outro) -->
+    <div style="text-align: center; margin-top: 32px;">
+      <svg width="90" height="100" viewBox="0 0 160 180">
+        <!-- Soft glow -->
+        <ellipse cx="80" cy="100" rx="65" ry="75" fill="white" opacity="0.2"/>
+        <!-- Body -->
+        <ellipse cx="80" cy="112" rx="44" ry="50" fill="white" opacity="0.8"/>
+        <!-- Head -->
+        <ellipse cx="80" cy="62" rx="38" ry="36" fill="white" opacity="0.85"/>
+        <!-- Left ear -->
+        <circle cx="52" cy="34" r="15" fill="white" opacity="0.75"/>
+        <circle cx="52" cy="35" r="7" fill="#c8e0ee" opacity="0.35"/>
+        <!-- Right ear -->
+        <circle cx="108" cy="34" r="15" fill="white" opacity="0.75"/>
+        <circle cx="108" cy="35" r="7" fill="#c8e0ee" opacity="0.35"/>
+        <!-- Eyes -->
+        <circle cx="69" cy="58" r="2.5" fill="#8a9aa5" opacity="0.6"/>
+        <circle cx="91" cy="58" r="2.5" fill="#8a9aa5" opacity="0.6"/>
+        <!-- Nose -->
+        <ellipse cx="80" cy="66" rx="3" ry="2" fill="#a0b0ba" opacity="0.5"/>
+        <!-- Smile -->
+        <path d="M74,71 Q80,76 86,71" stroke="#a0b0ba" stroke-width="1.3" fill="none" stroke-linecap="round" opacity="0.45"/>
+      </svg>
+    </div>
+    <div class="page-footer">— おしまい —</div>
+  </div>
+
+</div>
+</body>
+</html>
